@@ -1,18 +1,44 @@
 package com.mballen.curso.boot.service;
 
 import com.mballen.curso.boot.model.Departamento;
-
+import com.mballen.curso.boot.repository.IDepartamentoRepository;
+import javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
-public interface DepartamentoService {
+@Service
+public class DepartamentoService {
 
-    void salvar(Departamento departamento);
+    @Autowired
+    private IDepartamentoRepository repository;
 
-    void editar(Departamento departamento);
+    public void salvar(Departamento departamento) {
+        repository.save(departamento);
+    }
 
-    void excluir(Long id);
+    public List<Departamento> buscarTodos() {
+        return repository.findAll();
+    }
 
-    Departamento buscarPorId(Long id);
+    public Departamento buscarPorId(Long id) {
+        return repository.getOne(id);
+    }
 
-    List<Departamento> buscarTodos();
+    public void excluir(Long id) {
+        if(!this.departamentoTemCargos(id)) {
+            repository.deleteById(id);
+        }
+    }
+
+    private boolean departamentoTemCargos(Long id) {
+        boolean isPresent = true;
+        if(this.buscarPorId(id).getCargos().isEmpty()) {
+            isPresent = false;
+        }
+        return isPresent;
+    }
+
+
 }

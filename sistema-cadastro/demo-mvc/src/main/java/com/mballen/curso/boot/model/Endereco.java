@@ -1,16 +1,25 @@
 package com.mballen.curso.boot.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "TB_ENDERECO")
-public class Endereco extends AbstractEntity<Long, Number>{
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Endereco implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CO_ENDERECO")
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @NotNull
     @Column(name = "DS_LOGRADOURO")

@@ -1,8 +1,9 @@
 package com.mballen.curso.boot.repository;
 
 import com.mballen.curso.boot.model.Cargo;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CargoRepositoryImpl extends AbstractRepository<Cargo, Long> implements CargoRepository{
+public interface ICargoRepository extends JpaRepository<Cargo, Long> {
 }
