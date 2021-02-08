@@ -2,9 +2,12 @@ package com.mballen.curso.boot.service;
 
 import com.mballen.curso.boot.model.Departamento;
 import com.mballen.curso.boot.repository.IDepartamentoRepository;
+import com.mballen.curso.boot.util.Mensagens;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +29,12 @@ public class DepartamentoService {
         return repository.getOne(id);
     }
 
-    public void excluir(Long id) {
-        if(!this.departamentoTemCargos(id)) {
+    public void excluir(Long id, Model model) {
+        if(this.departamentoTemCargos(id)) {
+            model.addAttribute("fail", Mensagens.MSG_ERRO_DEPARTAMENTO_EXCLUSAO);
+        } else {
             repository.deleteById(id);
+            model.addAttribute("success", Mensagens.MSG_SUCCESSO_EXCLUSAO);
         }
     }
 

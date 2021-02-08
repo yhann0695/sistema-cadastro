@@ -3,6 +3,8 @@ package com.mballen.curso.boot.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,14 +29,18 @@ public class Funcionario implements Serializable {
     @NotNull
     private String nome;
 
-    @NotNull
+
+    @NumberFormat(style = NumberFormat.Style.CURRENCY, pattern = "#,##0.00")
     @Column(name = "SL_FUNCIONARIO", columnDefinition = "DECIMAL(7,2) DEFAULT 0.00")
+    @NotNull
     private BigDecimal salario;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "DT_ENTRADA", columnDefinition = "DATE")
     @NotNull
     private LocalDate dataEntrada;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "DT_SAIDA", columnDefinition = "DATE")
     private LocalDate dataSaida;
 
